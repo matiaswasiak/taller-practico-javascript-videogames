@@ -4,11 +4,25 @@ const game = canvas.getContext("2d");
 window.addEventListener("load", startGame);
 
 function startGame() {
-  // game.fillRect(0, 0, 100, 100);
-  // game.clearRect(10, 10, 80, 80);
-  // game.strokeRect(20, 20, 60, 60);
+  let canvasSize;
 
-  game.font = "25px Verdana";
-  game.fillStyle = "red";
-  game.fillText("Hello World", 10, 50);
+  if (window.innerWidth > window.innerHeight) {
+    canvasSize = window.innerHeight * 0.75;
+  } else {
+    canvasSize = window.innerWidth * 0.75;
+  }
+
+  canvas.setAttribute("width", canvasSize);
+  canvas.setAttribute("height", canvasSize);
+
+  // round a number to the nearest multiple of 10
+  const elementsSize = canvasSize / 10;
+
+  console.log({ canvasSize, elementsSize });
+
+  game.font = `${elementsSize}px Verdana`;
+
+  for (let i = 0; i < elementsSize; i++) {
+    game.fillText(emojis["X"], i * elementsSize, elementsSize);
+  }
 }
