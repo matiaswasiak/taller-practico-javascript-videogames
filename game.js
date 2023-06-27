@@ -15,10 +15,7 @@ function startGame() {
   canvas.setAttribute("width", canvasSize);
   canvas.setAttribute("height", canvasSize);
 
-  // round a number to the nearest multiple of 10
   const elementsSize = canvasSize / 10;
-
-  console.log({ canvasSize, elementsSize });
 
   game.font = `${elementsSize}px Verdana`;
 
