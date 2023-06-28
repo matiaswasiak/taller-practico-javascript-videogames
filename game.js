@@ -24,11 +24,20 @@ function setCanvasSize() {
 
 function startGame() {
   game.font = `${elementsSize}px Verdana`;
+  game.textAlign = "end";
 
-  for (let i = 0; i < elementsSize; i++) {
-    for (let j = 0; j < elementsSize; j++) {
-      game.fillText(emojis["X"], i * elementsSize, j * elementsSize);
+  const map = maps[1];
+  const mapRows = map.trim().split("\n");
+  const mapRowCols = mapRows.map((row) => row.trim().split(""));
+  console.log({ map, mapRows, mapRowCols });
+
+  for (let row = 1; row <= 10; row++) {
+    for (let col = 1; col <= 10; col++) {
+      game.fillText(
+        emojis[mapRowCols[row - 1][col - 1]],
+        elementsSize * col,
+        elementsSize * row
+      );
     }
-    game.fillText(emojis["X"], i * elementsSize, elementsSize);
   }
 }
