@@ -39,11 +39,15 @@ function startGame() {
   const mapRows = map.trim().split("\n");
   const mapRowCols = mapRows.map((row) => row.trim().split(""));
 
+  game.clearRect(0, 0, canvasSize, canvasSize);
+
   mapRowCols.forEach((row, rowIndex) => {
     row.forEach((col, colIndex) => {
-      if (col === "O") {
-        playerPosition.x = colIndex;
-        playerPosition.y = rowIndex;
+      if (col == "O") {
+        if (playerPosition.x === undefined) {
+          playerPosition.x = colIndex;
+          playerPosition.y = rowIndex;
+        }
       }
 
       game.fillText(
@@ -110,23 +114,23 @@ function move(event) {
 function moveUp() {
   console.log("up");
   playerPosition.y--;
-  movePlayer();
+  startGame();
 }
 
 function moveLeft() {
   console.log("left");
   playerPosition.x--;
-  movePlayer();
+  startGame();
 }
 
 function moveRight() {
   console.log("right");
   playerPosition.x++;
-  movePlayer();
+  startGame();
 }
 
 function moveDown() {
   console.log("down");
   playerPosition.y++;
-  movePlayer();
+  startGame();
 }
