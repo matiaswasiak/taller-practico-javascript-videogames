@@ -11,6 +11,11 @@ window.addEventListener("resize", setCanvasSize);
 let canvasSize;
 let elementsSize;
 
+const playerPosition = {
+  x: undefined,
+  y: undefined,
+};
+
 function setCanvasSize() {
   if (window.innerWidth > window.innerHeight) {
     canvasSize = window.innerHeight * 0.8;
@@ -36,6 +41,11 @@ function startGame() {
 
   mapRowCols.forEach((row, rowIndex) => {
     row.forEach((col, colIndex) => {
+      if (col === "O") {
+        playerPosition.x = colIndex;
+        playerPosition.y = rowIndex;
+      }
+
       game.fillText(
         emojis[col],
         elementsSize * (colIndex + 1),
@@ -43,6 +53,16 @@ function startGame() {
       );
     });
   });
+
+  movePlayer();
+}
+
+function movePlayer() {
+  game.fillText(
+    emojis["PLAYER"],
+    elementsSize * (playerPosition.x + 1),
+    elementsSize * (playerPosition.y + 1)
+  );
 }
 
 window.addEventListener("keydown", move);
@@ -89,16 +109,24 @@ function move(event) {
 
 function moveUp() {
   console.log("up");
+  playerPosition.y--;
+  movePlayer();
 }
 
 function moveLeft() {
   console.log("left");
+  playerPosition.x--;
+  movePlayer();
 }
 
 function moveRight() {
   console.log("right");
+  playerPosition.x++;
+  movePlayer();
 }
 
 function moveDown() {
   console.log("down");
+  playerPosition.y++;
+  movePlayer();
 }
