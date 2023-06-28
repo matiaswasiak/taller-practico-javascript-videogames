@@ -26,6 +26,9 @@ function startGame() {
   game.font = `${elementsSize}px Verdana`;
 
   for (let i = 0; i < elementsSize; i++) {
+    for (let j = 0; j < elementsSize; j++) {
+      game.fillText(emojis["X"], i * elementsSize, j * elementsSize);
+    }
     game.fillText(emojis["X"], i * elementsSize, elementsSize);
   }
 }
