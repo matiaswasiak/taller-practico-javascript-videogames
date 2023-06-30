@@ -112,25 +112,37 @@ function move(event) {
 }
 
 function moveUp() {
-  console.log("up");
+  if (playerPosition.y === 0) {
+    return;
+  }
+
   playerPosition.y--;
   startGame();
 }
 
 function moveLeft() {
-  console.log("left");
+  if (playerPosition.x === 0) {
+    return;
+  }
+
   playerPosition.x--;
   startGame();
 }
 
 function moveRight() {
-  console.log("right");
+  if (playerPosition.x === 9) {
+    return;
+  }
+
   playerPosition.x++;
   startGame();
 }
 
 function moveDown() {
-  console.log("down");
+  if (playerPosition.y === 9) {
+    return;
+  }
+
   playerPosition.y++;
   startGame();
 }
