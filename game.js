@@ -21,6 +21,8 @@ const giftPosition = {
   y: undefined,
 };
 
+let enemyPosition = [];
+
 function setCanvasSize() {
   if (window.innerWidth > window.innerHeight) {
     canvasSize = window.innerHeight * 0.8;
@@ -44,6 +46,7 @@ function startGame() {
   const mapRows = map.trim().split("\n");
   const mapRowCols = mapRows.map((row) => row.trim().split(""));
 
+  enemyPosition = [];
   game.clearRect(0, 0, canvasSize, canvasSize);
 
   mapRowCols.forEach((row, rowIndex) => {
@@ -56,6 +59,11 @@ function startGame() {
       } else if (col == "I") {
         giftPosition.x = colIndex;
         giftPosition.y = rowIndex;
+      } else if (col == "X") {
+        enemyPosition.push({
+          x: colIndex,
+          y: rowIndex,
+        });
       }
 
       game.fillText(
@@ -76,6 +84,18 @@ function movePlayer() {
 
   if (collisionWithGift) {
     console.log("You win!");
+    return;
+  }
+
+  const collisionWithEnemy = enemyPosition.some((enemy) => {
+    return (
+      playerPosition.x.toFixed(3) === enemy.x.toFixed(3) &&
+      playerPosition.y.toFixed(3) === enemy.y.toFixed(3)
+    );
+  });
+
+  if (collisionWithEnemy) {
+    console.log("You lose!");
     return;
   }
 
