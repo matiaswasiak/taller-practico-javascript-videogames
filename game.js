@@ -11,6 +11,7 @@ window.addEventListener("resize", setCanvasSize);
 let canvasSize;
 let elementsSize;
 let level = 0;
+let lives = 3;
 
 const playerPosition = {
   x: undefined,
@@ -101,8 +102,7 @@ function movePlayer() {
   });
 
   if (collisionWithEnemy) {
-    console.log("You lose!");
-    return;
+    levelFail();
   }
 
   game.fillText(
@@ -115,6 +115,20 @@ function movePlayer() {
 function levelWin() {
   console.log("You win!");
   level++;
+  startGame();
+}
+
+function levelFail() {
+  console.log("You crashed!");
+  lives--;
+
+  if (lives <= 0) {
+    level = 0;
+    lives = 3;
+  }
+
+  playerPosition.x = undefined;
+  playerPosition.y = undefined;
   startGame();
 }
 
