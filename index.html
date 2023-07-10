@@ -3,10 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      Platzriv - MMORPG no lineal en el que escribes tu propia historia sin
-      limitarte a seguir un camino prefijado
-    </title>
+    <title>PandAventures</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -14,17 +11,57 @@
       <canvas id="game"></canvas>
 
       <div class="buttons-container">
-        <button id="up">Arriba</button>
-        <button id="left">Izquierda</button>
-        <button id="right">Derecha</button>
-        <button id="down">Abajo</button>
+        <button id="up">⬆️</button>
+        <button id="left">⬅️</button>
+        <button id="right">➡️</button>
+        <button id="down">⬇️</button>
       </div>
 
       <div class="messages">
-        <p>Vidas: <span id="lives"></span></p>
-        <p>Tiempo: <span id="time"></span></p>
-        <p>Record: <span id="record"></span></p>
-        <p id="result"></p>
+        <p>
+          Lives: <br />
+          <span id="lives"></span>
+        </p>
+        <p>
+          Time: <br />
+          ⏳ <span id="time"></span>
+        </p>
+        <p>
+          Record: <br />
+          🏁 <span id="record"></span>
+        </p>
+      </div>
+
+      <div class="win-game">
+        <div class="emoji-background">
+          <h1>🎉🎉🎉 You Win! 🎉🎉🎉</h1>
+          <p>This is your time: <br /><span id="win-time"></span></p>
+          <p>Do you want to continue?</p>
+          <div class="modal-buttons">
+            <button id="yes-win">Yes</button>
+            <button id="no-win">No</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal">
+        <h1>Game Over 😔</h1>
+        <p>Do you want to continue?</p>
+        <div class="modal-buttons">
+          <button id="yes">Yes</button>
+          <button id="no">No</button>
+        </div>
+      </div>
+
+      <div class="end-game">
+        <h1>Best Time</h1>
+        <p>
+          <span id="final-record"></span>
+        </p>
+        <p>Thanks for playing!</p>
+        <div class="end-game-buttons">
+          <button id="restart">Restart</button>
+        </div>
       </div>
     </div>
 

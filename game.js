@@ -7,7 +7,13 @@ const btnDown = document.querySelector("#down");
 const spanLives = document.querySelector("#lives");
 const spanTime = document.querySelector("#time");
 const spanRecord = document.querySelector("#record");
-const pResult = document.querySelector("#result");
+const btnYes = document.querySelector("#yes");
+const btnNo = document.querySelector("#no");
+const btnRestart = document.querySelector("#restart");
+const finalRecord = document.querySelector("#final-record");
+const btnYesWin = document.querySelector("#yes-win");
+const btnNoWin = document.querySelector("#no-win");
+const winTime = document.querySelector("#win-time");
 
 window.addEventListener("load", setCanvasSize);
 window.addEventListener("resize", setCanvasSize);
@@ -35,22 +41,22 @@ let enemyPosition = [];
 
 function setCanvasSize() {
   if (window.innerWidth > window.innerHeight) {
-    canvasSize = window.innerHeight * 0.8;
+    canvasSize = window.innerHeight * 0.7;
   } else {
-    canvasSize = window.innerWidth * 0.8;
+    canvasSize = window.innerWidth * 0.7;
   }
 
   canvas.setAttribute("width", canvasSize);
   canvas.setAttribute("height", canvasSize);
 
-  elementsSize = canvasSize / 10;
+  elementsSize = canvasSize / 10.5;
 
   startGame();
 }
 
 function startGame() {
   game.font = `${elementsSize}px Verdana`;
-  game.textAlign = "end";
+  game.textAlign = "right";
 
   const map = maps[level];
 
@@ -92,7 +98,7 @@ function startGame() {
 
       game.fillText(
         emojis[col],
-        elementsSize * (colIndex + 1),
+        elementsSize * (colIndex + 1.4),
         elementsSize * (rowIndex + 1)
       );
     });
@@ -123,7 +129,7 @@ function movePlayer() {
 
   game.fillText(
     emojis["PLAYER"],
-    elementsSize * (playerPosition.x + 1),
+    elementsSize * (playerPosition.x + 1.4),
     elementsSize * (playerPosition.y + 1)
   );
 }
@@ -139,9 +145,7 @@ function levelFail() {
   lives--;
 
   if (lives <= 0) {
-    level = 0;
-    lives = 3;
-    timeStart = Date.now();
+    document.querySelector(".modal").classList.add("show");
   }
 
   playerPosition.x = undefined;
@@ -153,16 +157,15 @@ function gameWin() {
   console.log("You win the game!");
   clearInterval(timeInterval);
 
-  console.log(timeRegistered);
+  document.querySelector(".win-game").classList.add("show-win-game");
+  winTime.innerHTML = timeRegistered;
 
   const recordTime = localStorage.getItem("record_time");
 
   if (recordTime) {
     if (recordTime > timeRegistered) {
       localStorage.setItem("record_time", timeRegistered);
-      pResult.innerHTML = "You beat the record!";
     } else {
-      pResult.innerHTML = "You did not beat the record!";
     }
   } else {
     localStorage.setItem("record_time", timeRegistered);
@@ -191,6 +194,35 @@ function showRecord() {
   spanRecord.innerHTML = localStorage.getItem("record_time");
 }
 
+btnYes.addEventListener("click", restartGame);
+btnNo.addEventListener("click", endGame);
+btnRestart.addEventListener("click", restartGame);
+btnYesWin.addEventListener("click", restartGame);
+btnNoWin.addEventListener("click", endGame);
+
+function restartGame() {
+  level = 0;
+  lives = 3;
+  timeStart = Date.now();
+  removeTags();
+
+  playerPosition.x = undefined;
+  playerPosition.y = undefined;
+  startGame();
+}
+
+function endGame() {
+  removeTags();
+  document.querySelector(".end-game").classList.add("show-end-game");
+  finalRecord.innerHTML = localStorage.getItem("record_time");
+}
+
+function removeTags() {
+  document.querySelector(".modal").classList.remove("show");
+  document.querySelector(".win-game").classList.remove("show-win-game");
+  document.querySelector(".end-game").classList.remove("show-end-game");
+}
+
 window.addEventListener("keydown", move);
 btnUp.addEventListener("click", moveUp);
 btnLeft.addEventListener("click", moveLeft);
@@ -199,7 +231,6 @@ btnDown.addEventListener("click", moveDown);
 
 function move(event) {
   switch (event.key) {
-    // UP
     case "ArrowUp":
       moveUp();
       break;
@@ -207,7 +238,6 @@ function move(event) {
       moveUp();
       break;
 
-    // LEFT
     case "ArrowLeft":
       moveLeft();
       break;
@@ -215,7 +245,6 @@ function move(event) {
       moveLeft();
       break;
 
-    // RIGHT
     case "ArrowRight":
       moveRight();
       break;
@@ -223,7 +252,6 @@ function move(event) {
       moveRight();
       break;
 
-    // DOWN
     case "ArrowDown":
       moveDown();
       break;
